@@ -31,6 +31,31 @@ public:
         SetColor(colornumber);
     }
 
+    //function for counting parameters
+    short GetPerimetr()
+    {
+        perimetr = (high + weight) * 2;
+        return perimetr;
+    }
+
+    //function for counting square
+    short GetSquare()
+    {
+        square = high * weight;
+        return square;
+    }
+
+    //function for output all parameters
+    void print()
+    {
+        cout << "High: " << this->high << '\t';
+        cout << "Weigth: " << this->weight << '\t';
+        cout << "Color Index: " << this->color_number << '\t';
+        cout << "Color: " << this->color << '\n';
+        cout << endl << endl;
+
+    }
+
     void SetHigh(short high) {
         if (high < 0) {
             this->high = abs(high);
