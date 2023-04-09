@@ -644,7 +644,61 @@ public:
             mamory_free_variable = true;
     }
 
+    //SETERS
+    void SetElement(short row_number, short col_number, short value /*= 8*/)
+    {
+        if (row_number < 0 || row_number > this->number_rows) {
+            this->error = 11;  //going beyond the array
+            err_couter++;
+        }
+        else if (col_number < 0 || col_number > this->number_cols) {
+            this->error = 11;
+            err_couter++;
+        }
+        else if (value < SHRT_MIN || value > SHRT_MAX) {
+            this->error = 12;  //there is not enough memory
+            err_couter++;
+        }
+        else
+            this->arr[row_number][col_number] = value;
+    }
 
+    void SetMamoryFreeVariable(bool mamory_free_variable) {
+        this->mamory_free_variable = mamory_free_variable;
+    }
+
+
+    //GETERS
+    short GetElement(short i_index, short j_index) {
+        if (i_index >= 0 && i_index <= this->number_rows && j_index >= 0 && j_index <= this->number_cols) {
+            return this->arr[i_index][j_index];
+        }
+        else
+            error = 21;  // going beyondthe array
+        this->err_couter++;
+    }
+
+    short GetNumberRows() {
+        return this->number_rows;
+    }
+    short GetNumberCols() {
+        return this->number_cols;
+    }
+    short GetError() {
+        return this->error;
+    }
+
+
+    void Print() {
+        for (short i = 0; i < this->number_rows; i++) {
+            cout << endl;
+            for (short j = 0; j < this->number_cols; j++) {
+                //cout << "Array[" << i << "][" << j << "]= " << this->arr[i][j];
+                cout << this->arr[i][j] << '\t';
+            }
+        }
+        cout << endl;
+    }
 private:
     short** arr;
     short number_rows, number_cols;
