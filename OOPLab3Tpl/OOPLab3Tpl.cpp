@@ -1,24 +1,28 @@
-﻿// OOPLab3Tpl.cpp : Цей файл містить є шаблоном для 
-// виконання лаб. роботи №3. 
-// Він містинь функцію "main" з якої починається та закінчується виконання програми.
-//
+﻿#include <iostream>
 
-#include <iostream>
+using namespace std;
 
-// Ваші файли загловки 
-//
-#include "Lab3Example.h"
 int main()
 {
-    std::cout << " Lab #3  !\n";
-//  Код виконання завдань
-//  Головне меню завдань
-//  Функції та класи можуть знаходитись в інших файлах проекту
+    int choise;
+    cout << "Select a task:" << endl;
+    cout << "1. Rectangle;" << endl;
+    cout << "2. Class Vector;" << endl;
+    cout << "3. Matrix;" << endl;
+    cin >> choise;
 
-    int conv = 1;
-    if (conv == 1) conv = mainExample1();
-    if (conv == 1) conv = mainExample3(); 
-    if (conv == 1) conv = mainExample4();
+    if (choise == 1) {
+        Task1();
+    }
+    else if (choise == 2) {
+        Task2();
+    }
+    else if (choise == 3) {
+        Task3();
+    }
+    else
+        cout << "error: incorrect input" << endl;
 
+
+    return 0;
 }
-
