@@ -528,6 +528,130 @@ private:
 
 };
 
+
+/*Створити клас матриця. Даний клас містить вказівник на short, розмір рядків і стовпців
+та стан помилки. У класі визначити
+o конструктор без параметрів( виділяє місце для матриці 4 на 4 елемента та
+інінціалізує його в нуль);
+o конструктор з одним параметром – розмір n матриці (виділяє місце n на n та
+інінціалізує матрицю значенням нуль);
+o конструктор із трьома параметрами - розміри матриці (n , m) та значення
+ініціалізації value (виділяє місце перші аргументи та інінціалізує значенням
+третього аргументу - value);
+o конструктор копій та операцію присвоєння; // !!!
+o деструктор звільняє пам'ять;
+o визначити функцію, яка присвоює елементу масиву деяке значення value
+(параметр за замовчуванням);
+o функцію яка одержує деякий елемент матриці за індексами i та j;
+o визначити функції друку, додавання, множення, віднімання, які здійснюють ці
+арифметичні операції з даними цього класу;
+o визначити функцію множення матриці на скаляр типу short;
+o визначити функції порівняння: більше, менше або нерівно, які повертають true
+або false.
+У змінну стани встановлювати код помилки, коли не вистачає пам'яті, виходить за межі
+матриці. Передбачити можливість підрахунку числа об'єктів даного типу.*/
+
+
+class Matrix
+{
+public:
+    //default constructor
+    Matrix() :number_rows(4), number_cols(4)
+    {
+        arr = new short* [4];
+        for (short i = 0; i < 4; i++) {
+            arr[i] = new short[4];
+        }
+        for (short i = 0; i < 4; i++) {
+            for (short j = 0; j < 4; j++) {
+                arr[i][j] = 0;
+            }
+        }
+#ifdef DEBUG
+        cout << "default constructor " << this << endl;
+#endif // DEBUG
+
+    }
+
+    //other constuctors
+    Matrix(short n) :number_rows(n), number_cols(n)
+    {
+        arr = new short* [n];
+        for (short i = 0; i < n; i++) {
+            arr[i] = new short[n];
+        }
+        for (short i = 0; i < n; i++) {
+            for (short j = 0; j < n; j++) {
+                arr[i][j] = 0;
+            }
+        }
+#ifdef DEBUG
+        cout << "constructor square " << this << endl;
+#endif // DEBUG
+
+    }
+
+    Matrix(short n, short m, short value = 0) :number_rows(n), number_cols(m)
+    {
+        arr = new short* [n];
+        for (short i = 0; i < n; i++) {
+            arr[i] = new short[m];
+        }
+        for (short i = 0; i < n; i++) {
+            for (short j = 0; j < m; j++) {
+                arr[i][j] = value;
+            }
+        }
+#ifdef DEBUG
+        cout << "constructor rectangle " << this << endl;
+#endif // DEBUG
+
+    }
+
+    //constructor copying
+    Matrix(const Matrix& other) :number_rows(other.number_rows), number_cols(other.number_cols)
+    {
+        this->number_rows = other.number_rows;
+        this->number_cols = other.number_cols;
+        this->arr = new short* [other.number_rows];
+        for (short i = 0; i < other.number_rows; i++) {
+            this->arr[i] = new short[other.number_cols];
+        }
+
+        for (short i = 0; i < other.number_rows; i++) {
+            for (short j = 0; j < other.number_cols; j++) {
+                this->arr[i][j] = other.arr[i][j];
+            }
+        }
+#ifdef DEBUG
+        cout << "constructor copying " << this << endl;
+#endif // DEBUG
+    }
+
+    //destructor
+    ~Matrix() {
+        if (mamory_free_variable) {
+            for (short i = 0; i < this->number_rows; i++) {
+                delete[] arr[i];
+            }
+            delete[] arr;
+#ifdef DEBUG
+            cout << "destruktor" << this << endl;
+#endif // DEBUG
+
+        }
+        else
+            mamory_free_variable = true;
+    }
+
+
+private:
+    short** arr;
+    short number_rows, number_cols;
+    short error = 0, err_couter = 0;
+    bool mamory_free_variable = true;
+};
+
 void Task1()
 {
     rectangle a, b, c(5, 7, 4);
