@@ -1,5 +1,8 @@
 ﻿#include <iostream>
 #include <string>
+#include<climits>
+#include<cmath>
+#include<ctime>
 
 //#define DEBUG
 
@@ -644,6 +647,7 @@ public:
             mamory_free_variable = true;
     }
 
+
     //SETERS
     void SetElement(short row_number, short col_number, short value /*= 8*/)
     {
@@ -828,6 +832,21 @@ public:
     }
 
 
+    void RandInputArray(short limit = SHRT_MAX) {
+        srand(time(NULL));
+        for (short i = 0; i < this->number_rows; i++) {
+            for (short j = 0; j < this->number_cols; j++) {
+                this->arr[i][j] = rand() % limit;
+            }
+        }
+    }
+    void FreeingMemoryManually() {
+        for (short i = 0; i < this->number_rows; i++) {
+            delete[] arr[i];
+        }
+        delete[] arr;
+    }
+
 private:
     short** arr;
     short number_rows, number_cols;
@@ -891,6 +910,72 @@ void Task2()
     summ_vector.DeleteMemoryManualy();
     difference_vector.DeleteMemoryManualy();
 }
+
+void Task3()
+{
+    Matrix common, common_1(5), common_2(4, 7, 8);
+    common.Print();
+    if (common_1.IfUnEqually(common_2)) {
+        common_1.RandInputArray();
+        cout << "COMMON_1:";
+        common_1.Print();
+        cout << "COMMON_2:";
+        common_2.Print();
+    }
+    Matrix a(5), a_copy, b(5), b_copy, multiplied_matrix, c(2, 2), d(2, 3), multiplied_by_skalar(7, 4);
+
+    short value;
+
+
+    a.RandInputArray();
+    cout << "Array A (rand): ";
+    a_copy = a;
+    a_copy.Print();
+
+    b.RandInputArray();
+    cout << "Array B (rand): ";
+    b_copy = b;
+    b.Print();
+
+    cout << "Array A + array B = ";
+    a_copy.Addition(b);
+    a_copy.Print();
+
+    cout << "Array B - array A = ";
+    b_copy.Substruction(a);
+    b_copy.Print();
+
+    multiplied_by_skalar.RandInputArray(100);
+    cout << "Matrix berore the multiplication: ";
+    multiplied_by_skalar.Print();
+    cout << "Enter your skalar: ";
+    cin >> value;
+    multiplied_by_skalar.MultiplikationByScalar(value);
+    cout << "\nMatrix multiplied by the skalar: ";
+    multiplied_by_skalar.Print();
+
+
+    cout << "enter Array C:\n";
+    for (short i = 0; i < c.GetNumberRows(); i++) {
+        for (short j = 0; j < c.GetNumberCols(); j++) {
+            cin >> value;
+            c.SetElement(i, j, value);
+        }
+    }
+    cout << "enter Array D:\n";
+    for (short i = 0; i < d.GetNumberRows(); i++) {
+        for (short j = 0; j < d.GetNumberCols(); j++) {
+            cin >> value;
+            d.SetElement(i, j, value);
+        }
+    }
+    multiplied_matrix = c.Multipliсation(d);
+    cout << "Multiplication of Matrixes A & B = ";
+    multiplied_matrix.Print();
+
+
+}
+
 
 
 int main()
