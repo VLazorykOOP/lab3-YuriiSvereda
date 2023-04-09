@@ -699,6 +699,135 @@ public:
         }
         cout << endl;
     }
+
+    //Functions of arithmetic operations
+    void Addition(Matrix other_arr)
+    {
+        short other_number_rows, other_number_cols;
+        other_number_rows = other_arr.GetNumberRows();
+        other_number_cols = other_arr.GetNumberCols();
+
+        if (this->number_rows == other_number_rows && this->number_cols == other_number_cols) {
+            for (short i = 0; i < other_number_rows; i++) {
+                for (short j = 0; j < other_number_cols; j++) {
+                    this->arr[i][j] += other_arr.GetElement(i, j);
+                }
+            }
+        }
+        else
+            cout << "ERROR (Addition) arrays have different sizes\n";
+
+    }
+
+    void Substruction(Matrix other_arr)
+    {
+        short other_number_rows, other_number_cols;
+        other_number_rows = other_arr.GetNumberRows();
+        other_number_cols = other_arr.GetNumberCols();
+
+        if (this->number_rows == other_number_rows && this->number_cols == other_number_cols) {
+            for (short i = 0; i < other_number_rows; i++) {
+                for (short j = 0; j < other_number_cols; j++) {
+                    this->arr[i][j] -= other_arr.GetElement(i, j);
+                }
+            }
+        }
+        else
+            cout << "ERROR (Substruction) arrays have different sizes\n";
+
+    }
+
+    Matrix Multipliсation(Matrix other_arr)
+    {
+        short other_number_rows, other_number_cols;
+        other_number_rows = other_arr.GetNumberRows();
+        other_number_cols = other_arr.GetNumberCols();
+
+        if (this->number_cols == other_number_rows) {
+            short result_number_rows, result_number_cols;
+            result_number_rows = this->number_rows;
+            result_number_cols = other_number_cols;
+
+            Matrix result(result_number_rows, result_number_cols, 0);
+            short value;
+            for (short i = 0; i < result_number_rows; i++) {
+                for (short j = 0; j < result_number_cols; j++) {
+                    value = 0;
+                    for (short k = 0; k < this->number_cols; k++) {
+                        value += this->arr[i][k] * other_arr.GetElement(k, j);
+                    }
+                    result.SetElement(i, j, value);
+                }
+            }
+            result.SetMamoryFreeVariable(false);
+            return result;
+        }
+        else
+            cout << "ERROR (Multiplikation) bad sizes \n";
+    }
+
+    void MultiplikationByScalar(short skalar) {
+        for (short i = 0; i < this->number_rows; i++) {
+            for (short j = 0; j < this->number_cols; j++) {
+                this->arr[i][j] *= skalar;
+            }
+        }
+    }
+
+
+    //Functions of compairing 
+    bool IfBigger(Matrix other_arr)
+    {
+        if (this->number_rows != other_arr.GetNumberRows() || this->number_cols != other_arr.GetNumberCols()) {
+            cout << "ERROR (If Bigger) sizes of matrixes" << endl;
+            return false;
+        }
+        else {
+            for (short i = 0; i < number_rows; i++) {
+                for (short j = 0; j < number_cols; j++) {
+                    if (this->arr[i][j] <= other_arr.GetElement(i, j))
+                        return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    bool IfSmaller(Matrix other_arr)
+    {
+        if (this->number_rows != other_arr.GetNumberRows() || this->number_cols != other_arr.GetNumberCols()) {
+            cout << "ERROR (If Smaller) sizes of matrixes" << endl;
+            return false;
+        }
+        else {
+            for (short i = 0; i < number_rows; i++) {
+                for (short j = 0; j < number_cols; j++) {
+                    if (this->arr[i][j] >= other_arr.GetElement(i, j))
+                        return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    bool IfUnEqually(Matrix other_arr)
+    {
+        if (this->number_rows != other_arr.GetNumberRows() || this->number_cols != other_arr.GetNumberCols()) {
+            cout << "Different sizes of matrixes" << endl;
+            return true;
+        }
+        else {
+            for (short i = 0; i < number_rows; i++) {
+                for (short j = 0; j < number_cols; j++) {
+                    if (this->arr[i][j] != other_arr.GetElement(i, j))
+                        return false;
+                }
+            }
+            return true;
+        }
+    }
+
+
 private:
     short** arr;
     short number_rows, number_cols;
