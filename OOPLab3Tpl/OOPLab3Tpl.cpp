@@ -273,6 +273,7 @@ public:
         }
     }
 
+
     //SETERS
     void SetElement(short element_number, double value = 6.66) {
         if (element_number < 0 || element_number > size) {
@@ -333,6 +334,23 @@ public:
         cout << endl;
     }
 
+
+    void DeleteMemoryManualy() {
+        delete[]vector;
+    }
+    void ConsolInputVector() {
+        double value;
+        cout << "input size: ";
+        cin >> this->size;
+        this->vector = new double[size];
+        for (short i = 0; i < size; i++) {
+            cout << "vector[" << i << "] = ";
+            cin >> value;
+            this->SetElement(i, value);
+        }
+    }
+
+
     //functions of arithmetic operations
     ClassVector Addition(ClassVector other_vector) {
 
@@ -391,11 +409,123 @@ public:
 
     }
 
+
+
+    //functions of comparison by elements
+    bool IfBiggerByElements(ClassVector other_vector) {
+        short other_size;
+        other_size = other_vector.GetSize();
+
+        if (this->size > other_size)
+            return true;
+        else {
+            for (short i = 0; i < this->size; i++) {
+                if (this->vector[i] <= other_vector.GetElement(i))
+                    return false;
+
+            }
+            return true;
+        }
+    }
+
+    bool IfSmallerByElements(ClassVector other_vector) {
+        short other_size;
+        other_size = other_vector.GetSize();
+
+        if (this->size > other_size)
+            return true;
+        else {
+            for (short i = 0; i < this->size; i++) {
+                if (this->vector[i] >= other_vector.GetElement(i))
+                    return false;
+
+            }
+            return true;
+        }
+    }
+
+    bool IfEqualByElements(ClassVector other_vector) {
+        short other_size;
+        other_size = other_vector.GetSize();
+
+        if (this->size > other_size)
+            return true;
+        else {
+            for (short i = 0; i < this->size; i++) {
+                if (this->vector[i] != other_vector.GetElement(i))
+                    return false;
+
+            }
+            return true;
+        }
+    }
+
+
+    //functions of comparison by modul
+    bool IfBiggerByModul(ClassVector other_vector) {
+        double this_modul = 1, other_modul = 1;
+        for (short i = 0; i < this->size; i++) {
+            this_modul += this->vector[i] * this->vector[i];
+        }
+        this_modul = sqrt(this_modul);
+
+        short other_size = other_vector.GetSize();
+        for (short i = 0; i < other_size; i++) {
+            other_modul += other_vector.GetElement(i) * other_vector.GetElement(i);
+        }
+        other_modul = sqrt(other_modul);
+
+        if (this_modul > other_modul) {
+            return true;
+        }
+        return false;
+    }
+
+    bool IfSmallerByModul(ClassVector other_vector) {
+        double this_modul = 1, other_modul = 1;
+        for (short i = 0; i < this->size; i++) {
+            this_modul += this->vector[i] * this->vector[i];
+        }
+        this_modul = sqrt(this_modul);
+
+        short other_size = other_vector.GetSize();
+        for (short i = 0; i < other_size; i++) {
+            other_modul += other_vector.GetElement(i) * other_vector.GetElement(i);
+        }
+        other_modul = sqrt(other_modul);
+
+        if (this_modul < other_modul) {
+            return true;
+        }
+        return false;
+    }
+
+    bool IfEqualByModul(ClassVector other_vector) {
+        double this_modul = 1, other_modul = 1;
+        for (short i = 0; i < this->size; i++) {
+            this_modul += this->vector[i] * this->vector[i];
+        }
+        this_modul = sqrt(this_modul);
+
+        short other_size = other_vector.GetSize();
+        for (short i = 0; i < other_size; i++) {
+            other_modul += other_vector.GetElement(i) * other_vector.GetElement(i);
+        }
+        other_modul = sqrt(other_modul);
+
+        if (this_modul == other_modul) {
+            return true;
+        }
+        return false;
+    }
+
+
 private:
     double* vector;
     short size, error = 0, err_counter = 0;/*1 — set element
                                              2 — set size */
     bool state_variable = true;
+
 };
 
 void Task1()
@@ -414,6 +544,46 @@ void Task1()
     cout << "Perimetr equal " << cPerimetr << '\n';
 }
 
+void Task2()
+{
+    ClassVector defult, defult_1(5), defult_2(5, 8);
+    cout << "DEF:" << endl;
+    defult.print();
+    if (defult_1.IfSmallerByElements(defult_2)) {
+        cout << "DEF1:" << endl;
+        defult_1.print();
+        cout << "DEF2:" << endl;
+        defult_2.print();
+    }
+
+    ClassVector a(6, 8), b(8, 6), summ_vector, difference_vector, multiplicated_vector, divided_vector;
+
+    summ_vector = a.Addition(b);
+    cout << "Addition of vectors a & b =" << endl;
+    summ_vector.print();
+
+    difference_vector = a.Subtraсtion(b);
+    cout << "Substruction of vectors a & b =" << endl;
+    difference_vector.print();
+
+    multiplicated_vector.ConsolInputVector();
+    cout << endl;
+    multiplicated_vector.MultiplicationByScalar(3);
+    cout << "Vector of multiplications by 3:" << endl;
+    multiplicated_vector.print();
+
+    divided_vector.ConsolInputVector();
+    cout << endl;
+    divided_vector.DvisionByScalar(4);
+    cout << "Vector of divisions by 4:" << endl;
+    divided_vector.print();
+
+    /*delete memory manualy because in function of arithmetic operations
+    wasn`t able to use destructor and delete it automatically
+    (allocated memory had deleted before the outputing of array)*/
+    summ_vector.DeleteMemoryManualy();
+    difference_vector.DeleteMemoryManualy();
+}
 
 
 int main()
