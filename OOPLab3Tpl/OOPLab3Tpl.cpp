@@ -11,7 +11,7 @@ o функції-члени встановлення висоти, ширини,
 o функції-члени що повертають значення полів;
 o функцію друку.*/
 
-class rectangle 
+class rectangle
 {
 public:
     //default constructor
@@ -56,6 +56,7 @@ public:
 
     }
 
+    //SETERS
     void SetHigh(short high) {
         if (high < 0) {
             this->high = abs(high);
@@ -81,7 +82,25 @@ public:
             color = GetColor(color_number);
         }
 
-    }       
+    }
+    void SetColor_OnlyIndex(short colornumber) {
+        if (colornumber < 0 || colornumber > 7) {
+            cout << "incorrect input" << endl;
+            colornumber = -1;
+        }
+        color_number = colornumber;
+    }
+
+    //GETERS
+    short GetHigh() {
+        return high;
+    }
+    short GetWeigth() {
+        return weight;
+    }
+    short GetColorNumber() {
+        return color_number;
+    }
 
     string GetColor(short colornumber) {
 
@@ -119,11 +138,61 @@ public:
 
     }
 
+    //function for consol inputing parameters
+    void ConsolInputingParameters()
+    {
+        short highValue, weightValue, colorValue;
+
+        cout << "enter high: ";
+        cin >> highValue;
+        SetHigh(highValue);
+
+        cout << "enter weight: ";
+        cin >> weightValue;
+        SetWeigth(weightValue);
+
+        ColorMenu();
+        cin >> colorValue;
+        SetColor_OnlyIndex(colorValue);
+        GetColor(color_number);
+    }
+
 private:
     short high, weight, color_number;
     short perimetr, square;
     string color;
+
+
+
+    void ColorMenu() {
+        cout << "enter number of color" << endl;
+        cout << "1. white" << endl;
+        cout << "2. red" << endl;
+        cout << "3. yellow" << endl;
+        cout << "4. green" << endl;
+        cout << "5. blue" << endl;
+        cout << "6. purpule" << endl;
+        cout << "7. black" << endl;
+    }
 };
+
+void Task1()
+{
+    rectangle a, b, c(5, 7, 4);
+    cout << "Rectangle A:" << endl;
+    a.print();
+    b.ConsolInputingParameters();
+    cout << "Rectangle B:" << endl;
+    b.print();
+    cout << "Rectangle C:" << endl;
+    c.print();
+    short cSquare = c.GetSquare();
+    cout << "Square equal " << cSquare << '\n';
+    short cPerimetr = c.GetPerimetr();
+    cout << "Perimetr equal " << cPerimetr << '\n';
+}
+
+
 
 int main()
 {
