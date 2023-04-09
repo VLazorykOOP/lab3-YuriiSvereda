@@ -273,6 +273,26 @@ public:
         }
     }
 
+    //SETERS
+    void SetElement(short element_number, double value = 6.66) {
+        if (element_number < 0 || element_number > size) {
+            cout << "set element error" << endl;
+            this->error = 1; // set element error
+            this->err_counter++;
+        }
+        else if (value < DBL_MIN || value > DBL_MAX) {
+            value = 6.66;
+            this->error = 1;
+            this->err_counter++;
+            this->vector[element_number] = value;
+        }
+        else
+            this->vector[element_number] = value;
+    }
+
+    void SetStateVirable(bool state_variable) {
+        this->state_variable = state_variable;
+    }
     void SetSize(short size) {
         if (size >= 0) {
             this->size = size;
@@ -292,6 +312,84 @@ public:
 
     }
 
+    //GETERS
+    short GetSize() {
+        return this->size;
+    }
+    double GetElement(short element_number) {
+        return this->vector[element_number];
+    }
+    short GetErrorIndex() {
+        return this->error;
+    }
+    short GetErrorCouter() {
+        return this->err_counter;
+    }
+
+    void print() {
+        for (short i = 0; i < size; i++) {
+            cout << "vector[" << i << "] = " << vector[i] << endl;
+        }
+        cout << endl;
+    }
+
+    //functions of arithmetic operations
+    ClassVector Addition(ClassVector other_vector) {
+
+        double value;
+        short resultsize;
+        //check which size bigger becouse bigger one will be size of the result`s vector
+        if (this->GetSize() < other_vector.GetSize()) {
+            resultsize = this->size;
+        }
+        else
+            resultsize = other_vector.GetSize();
+
+        ClassVector result(resultsize);
+        for (short i = 0; i < resultsize; i++) {
+            value = this->vector[i] + other_vector.GetElement(i);
+            result.SetElement(i, value);
+        }
+        result.SetStateVirable(0);
+        return result;
+    }
+
+    ClassVector Subtraсtion(ClassVector other_vector) {
+        double value;
+        short resultsize;
+        if (this->GetSize() < other_vector.GetSize()) {
+            resultsize = this->size;
+        }
+        else {
+            resultsize = other_vector.GetSize();
+        }
+        ClassVector result(resultsize);
+        for (short i = 0; i < resultsize; i++) {
+            value = this->vector[i] - other_vector.GetElement(i);
+            result.SetElement(i, value);
+        }
+        result.SetStateVirable(0);
+        return result;
+    }
+
+    //functions of multiplication and division by a scalar
+    void MultiplicationByScalar(double scalar) {
+        double value;
+        for (short i = 0; i < size; i++) {
+            value = vector[i] * scalar;
+            this->SetElement(i, value);
+        }
+
+    }
+
+    void DvisionByScalar(double scalar) {
+        double value;
+        for (short i = 0; i < size; i++) {
+            value = vector[i] / scalar;
+            this->SetElement(i, value);
+        }
+
+    }
 
 private:
     double* vector;
