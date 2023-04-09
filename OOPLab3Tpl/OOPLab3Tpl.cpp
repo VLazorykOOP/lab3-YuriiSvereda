@@ -1,4 +1,7 @@
 ﻿#include <iostream>
+#include <string>
+
+//#define DEBUG
 
 using namespace std;
 
@@ -174,6 +177,127 @@ private:
         cout << "6. purpule" << endl;
         cout << "7. black" << endl;
     }
+};
+
+/*Задача 2.3.
+Створити тип даних - клас вектор, який має вказівник на double, число елементів і
+змінну стану. У класі визначити
+
+o конструктор без параметрів( виділяє місце для одного елемента та інінціалізує
+його в нуль);
+o конструктор з одним параметром - розмір вектора( виділяє місце та інінціалізує
+масив значенням нуль);
+o конструктор із двома параметрами - розмір вектора та значення
+ініціалізації(виділяє місце (значення перший аргумент) та інінціалізує
+значенням другого аргументу);
+o конструктор копій та операцію присвоєння; // !!!
+o деструктор звільняє пам'ять;
+o визначити функцію, яка присвоює елементу масиву деяке значення (параметр за
+замовчуванням);
+o функцію яка одержує деякий елемент масиву;
+o визначити функції друку, додавання, віднімання, які здійснюють ці
+арифметичні операції з даними цього класу, множення та ділення на скаляр
+типу double;
+o визначити функції порівняння: більше, менше або рівно, які повертають true
+або false.
+У змінну стани встановлювати код помилки, коли не вистачає пам'яті, виходить за межі масиву.
+Передбачити можливість підрахунку числа об'єктів даного типу*/
+
+
+class ClassVector
+{
+public:
+    //default constructor
+    ClassVector() {
+        this->size = 1;
+        this->vector = new double[this->size];
+        this->vector[0] = 0;
+#ifdef DEBUG
+        cout << "default constructor " << this << endl;
+#endif // DEBUG
+
+    }
+
+    //other constructors
+    ClassVector(short size) {
+        this->SetSize(size);
+        vector = new double[size];
+        for (short i = 0; i < size; i++) {
+            vector[i] = 0;
+        }
+#ifdef DEBUG
+        cout << "constructor size only " << this << endl;
+#endif // DEBUG
+
+    }
+
+    ClassVector(short size, double inicialisated_value) {
+        this->SetSize(size);
+        vector = new double[size];
+        for (short i = 0; i < size; i++) {
+            vector[i] = inicialisated_value;
+        }
+#ifdef DEBUG
+        cout << "constructor size n value " << this << endl;
+#endif // DEBUG
+
+    }
+
+    //constructor of copy
+    ClassVector(const ClassVector& other) {
+        this->size = other.size;
+        this->vector = new double[other.size];
+        for (short i = 0; i < other.size; i++) {
+            this->vector[i] = other.vector[i];
+        }
+#ifdef DEBUG
+        cout << "constructor copy " << this << endl;
+#endif // DEBUG
+
+    }
+
+    //destructor
+    ~ClassVector() {
+        if (state_variable) {
+            delete[]vector;
+#ifdef DEBUG
+            cout << "destructor deleted memory" << this << endl;
+#endif // DEBUG
+        }
+        else {
+            state_variable = 1;
+
+#ifdef DEBUG
+            cout << "destructor skiped" << this << endl;
+#endif // DEBUG
+        }
+    }
+
+    void SetSize(short size) {
+        if (size >= 0) {
+            this->size = size;
+
+        }
+        else if (size < SHRT_MIN || size > SHRT_MAX) {
+            error = 2; // size input error
+            this->err_counter++;
+            this->size = 0;
+        }
+
+        else {
+            error = 2;
+            this->err_counter++;
+            this->size = abs(size);
+        }
+
+    }
+
+
+private:
+    double* vector;
+    short size, error = 0, err_counter = 0;/*1 — set element
+                                             2 — set size */
+    bool state_variable = true;
 };
 
 void Task1()
