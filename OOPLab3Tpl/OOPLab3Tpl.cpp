@@ -557,6 +557,7 @@ o визначити функції порівняння: більше, менш
 матриці. Передбачити можливість підрахунку числа об'єктів даного типу.*/
 
 class Matrix
+
 {
 public:
     //default constructor
@@ -615,8 +616,6 @@ public:
     //constructor copying
     Matrix(const Matrix& other) :number_rows(other.number_rows), number_cols(other.number_cols)
     {
-        this->number_rows = other.number_rows;
-        this->number_cols = other.number_cols;
         this->arr = new short* [other.number_rows];
         for (short i = 0; i < other.number_rows; i++) {
             this->arr[i] = new short[other.number_cols];
@@ -650,7 +649,7 @@ public:
 
 
     //SETERS
-    void SetElement(short row_number, short col_number, short value /*= 8*/)
+    void SetElement(short row_number, short col_number, short value = 0)
     {
         if (row_number < 0 || row_number > this->number_rows) {
             this->error = 11;  //going beyond the array
@@ -698,11 +697,11 @@ public:
         for (short i = 0; i < this->number_rows; i++) {
             cout << endl;
             for (short j = 0; j < this->number_cols; j++) {
-                //cout << "Array[" << i << "][" << j << "]= " << this->arr[i][j];
+                //cout << "Array[" << i << "][" << j << "]= " << this->arr[i][
                 cout << this->arr[i][j] << '\t';
             }
         }
-        cout << endl;
+        cout << endl << endl;
     }
 
     //Functions of arithmetic operations
@@ -753,7 +752,7 @@ public:
             result_number_rows = this->number_rows;
             result_number_cols = other_number_cols;
 
-            Matrix result(result_number_rows, result_number_cols, 0);
+            Matrix result(result_number_rows, result_number_cols);
             short value;
             for (short i = 0; i < result_number_rows; i++) {
                 for (short j = 0; j < result_number_cols; j++) {
@@ -824,7 +823,7 @@ public:
         else {
             for (short i = 0; i < number_rows; i++) {
                 for (short j = 0; j < number_cols; j++) {
-                    if (this->arr[i][j] != other_arr.GetElement(i, j))
+                    if (this->arr[i][j] == other_arr.GetElement(i, j))
                         return false;
                 }
             }
@@ -916,6 +915,7 @@ void Task2()
 void Task3()
 {
     Matrix common, common_1(5), common_2(4, 7, 8);
+    cout << "COMMON: ";
     common.Print();
     if (common_1.IfUnEqually(common_2)) {
         common_1.RandInputArray();
@@ -924,19 +924,19 @@ void Task3()
         cout << "COMMON_2:";
         common_2.Print();
     }
-    Matrix a(5), a_copy, b(5), b_copy, multiplied_matrix, c(2, 2), d(2, 3), multiplied_by_skalar(7, 4);
+    Matrix a(5), b(5), multiplied_matrix, c(2, 2), d(2, 3), multiplied_by_skalar(7, 4);
 
     short value;
 
 
-    a.RandInputArray();
+    a.RandInputArray(1600);
     cout << "Array A (rand): ";
-    a_copy = a;
+    Matrix a_copy(a);
     a_copy.Print();
 
-    b.RandInputArray();
+    b.RandInputArray(1600);
     cout << "Array B (rand): ";
-    b_copy = b;
+    Matrix b_copy(b);
     b.Print();
 
     cout << "Array A + array B = ";
@@ -975,7 +975,7 @@ void Task3()
     cout << "Multiplication of Matrixes A & B = ";
     multiplied_matrix.Print();
 
-
+    multiplied_matrix.FreeingMemoryManually();
 }
 
 int main()
