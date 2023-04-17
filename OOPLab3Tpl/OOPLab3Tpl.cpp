@@ -64,7 +64,8 @@ public:
     }
 
     //SETERS
-    void SetHigh(short high) {
+    void SetHigh(short high) 
+    {
         if (high < 0) {
             this->high = abs(high);
         }
@@ -322,9 +323,6 @@ public:
     short GetSize() {
         return this->size;
     }
-    double GetElement(short element_number) {
-        return this->vector[element_number];
-    }
     short GetErrorIndex() {
         return this->error;
     }
@@ -557,7 +555,6 @@ o визначити функції порівняння: більше, менш
 матриці. Передбачити можливість підрахунку числа об'єктів даного типу.*/
 
 class Matrix
-
 {
 public:
     //default constructor
@@ -575,7 +572,6 @@ public:
 #ifdef DEBUG
         cout << "default constructor " << this << endl;
 #endif // DEBUG
-
     }
 
     //other constuctors
@@ -593,7 +589,6 @@ public:
 #ifdef DEBUG
         cout << "constructor square " << this << endl;
 #endif // DEBUG
-
     }
 
     Matrix(short n, short m, short value = 0) :number_rows(n), number_cols(m)
@@ -610,7 +605,6 @@ public:
 #ifdef DEBUG
         cout << "constructor rectangle " << this << endl;
 #endif // DEBUG
-
     }
 
     //constructor copying
@@ -641,7 +635,6 @@ public:
 #ifdef DEBUG
             cout << "destruktor" << this << endl;
 #endif // DEBUG
-
         }
         else
             mamory_free_variable = true;
@@ -695,9 +688,7 @@ public:
 
     void Print() {
         for (short i = 0; i < this->number_rows; i++) {
-            cout << endl;
             for (short j = 0; j < this->number_cols; j++) {
-                //cout << "Array[" << i << "][" << j << "]= " << this->arr[i][
                 cout << this->arr[i][j] << '\t';
             }
         }
@@ -720,7 +711,6 @@ public:
         }
         else
             cout << "ERROR (Addition) arrays have different sizes\n";
-
     }
 
     void Substruction(Matrix other_arr)
@@ -738,7 +728,6 @@ public:
         }
         else
             cout << "ERROR (Substruction) arrays have different sizes\n";
-
     }
 
     Matrix Multipliсation(Matrix other_arr)
@@ -925,9 +914,7 @@ void Task3()
         common_2.Print();
     }
     Matrix a(5), b(5), multiplied_matrix, c(2, 2), d(2, 3), multiplied_by_skalar(7, 4);
-
     short value;
-
 
     a.RandInputArray(1600);
     cout << "Array A (rand): ";
@@ -998,7 +985,6 @@ int main()
     }
     else
         cout << "error: incorrect input" << endl;
-
 
     return 0;
 }
